@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-xs-12">
+        <a href="/categories" class="btn btn-outline-primary">Add Category</a>
+        <a href="/categories" class="btn btn-outline-primary">Add Item</a>
+    </div>
+    <div class="col-lg-6 col-xs-12 ">
+        <form class="search form-group form-inline search ">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Search Items">
+            <button type="button" class="btn btn-outline-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-xs-12">
+        <div class="card">
+            <div class="card-header"> Categories </div>
+            <div class="card-block">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xs-12 ">
+        <div class="card">
+            <div class="card-header"> Last Added </div>
+            <div class="card-block">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
