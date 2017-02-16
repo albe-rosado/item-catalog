@@ -4,11 +4,11 @@ from wtforms.validators import DataRequired
 
 
 
-class Category(FlaskForm):
+class CategoryForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
 
 
-class Item(FlaskForm):
+class ItemForm(FlaskForm):
     title = StringField('title', validators=[DataRequired()])
     description = StringField('description', validators=[DataRequired()])
     cat_assign = SelectField(u'Programming Language', choices=[('py', 'Python'), ('text', 'Plain Text')])
