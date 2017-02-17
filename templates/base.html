@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <!-- Custom Styles-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-
-
 </head>
 <body>
     <div class="container">
@@ -18,12 +16,18 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <img src="{{url_for('static', filename='img/catalog-icon.png')}}" width="30" height="30" alt="Icon">
             <a class="navbar-brand" href="#">Item Catalog</a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 </ul>
-                <a href="/login" class="navbar-right">Login</a>
+                {% if user %}
+                    <h5>Welcome, {{ user['nickname'] }} (<a href="/logout">Logout</a>)</h5>
+                {% else %}
+                    <button onclick="lock.show();" class="btn btn-outline-primary">Login</button>
+                {% endif %}
+                
             </div>
         </nav>
         <br>
@@ -34,6 +38,18 @@
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://cdn.auth0.com/js/lock/10.9.1/lock.min.js"></script>
+<script>
+  var lock = new Auth0Lock('sQLcidME4R6z1UdBtYB0V4ay9pwDRoML', 'udacity-itemcatalog.auth0.com', {
+    auth: {
+      redirectUrl: 'http://localhost:3000/callback',
+      responseType: 'code',
+      params: {
+        scope: 'openid email' // Learn about scopes: https://auth0.com/docs/scopes
+      }
+    }
+  });
+</script>
 </body>
 </html>
 

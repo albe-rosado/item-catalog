@@ -1,6 +1,11 @@
 .navbar {
-    margin-top: .5em;
+    margin-top: 0.5rem;
 }
+
+.navbar-brand {
+    margin-left: .4em !important;
+}
+
 
 .search {
     margin-top: 0.5rem;

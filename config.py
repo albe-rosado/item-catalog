@@ -8,3 +8,15 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
 
 
 
+""" 
+        Constants for Auth0 Login
+"""
+CODE_KEY = 'code'
+CONTENT_TYPE_KEY = 'content-type'
+ACCESS_TOKEN_KEY = 'access_token'
+APP_JSON_KEY = 'application/json'
+AUTH0_DOMAIN = 'udacity-itemcatalog.auth0.com'
+AUTH0_CLIENT_ID = 'sQLcidME4R6z1UdBtYB0V4ay9pwDRoML'
+AUTH0_CLIENT_SECRET = 'fcBH3ig-sBQCgggi2m4oE6jixIFk8caKWZFCNa36u2T7mKOyfNX92VfGG7fV3H5k'
+AUTH0_CALLBACK_URL = 'http://localhost:3000/callback'
+
