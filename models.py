@@ -12,7 +12,7 @@ class Category(db.Model):
 class Item(db.Model):
     __tablename__ = 'items'
     id = db.Column(db.Integer, primary_key=True)
-    cat_name = db.Column(db.Integer, db.ForeignKey('categories.name'))
+    cat_name = db.Column(db.String, db.ForeignKey('categories.name'))
     title = db.Column(db.String, nullable = False)
     description = db.Column(db.Text, nullable = False)
     created_by = db.Column(db.String)

@@ -125,7 +125,38 @@ def newItem(user):
 
 
 
+# Shows Item details
+@app.route('/category/<cat_name>/item/<item_id>')
+def showItem(cat_name, item_id):
+    item = Item.query.filter_by(id = item_id).first_or_404()
+    if 'profile' in session:
+        user = session['profile']
+    else:
+        user = None
+    return render_template('showItem.html', item = item, user = user)
 
+
+
+
+# Edit Item
+@app.route('/item/<item_id>/edit', methods = ['GET', 'POST'])
+@requires_auth
+def editItem(item_id, user):
+    item = Item.query.filter_by(id = item_id).first_or_404()
+    if user['user_id'] != item.created_by:
+        return redirect('/')
+    else:
+        form = ItemForm()
+        message = None
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                item.title = form.title.data
+                item.description = form.description.data
+                db.session.commit()
+            else:
+                message = "All fields are required"
+        params = dict(item = item, user = user, form = form)
+        return render_template('editItem.html', **params)
 
 
 

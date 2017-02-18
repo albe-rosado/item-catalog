@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">{{item.title}}</h4>
+                <p class="card-text">{{item.description}}</p>
+                <!--Check if user owns the item-->
+                {% if user['user_id'] == item.created_by %}
+                    <a href="/item/{{item.id}}/edit" class="card-link">Edit Item</a>
+                    <a href="/item/{{item.id}}/delete" class="card-link">Delete Item</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

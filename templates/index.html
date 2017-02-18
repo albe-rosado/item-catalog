@@ -30,11 +30,11 @@
     </div>
     <div class="col-lg-6 col-xs-12 ">
         <div class="card">
-            <div class="card-header"> Last Added </div>
+            <div class="card-header"> Last Items added </div>
             <div class="card-block">
                 <ul class="list-group">
                     {% for e in last_added %}
-                        <li class="list-group-item"><a href="/category/{{ e.cat_name }}/item/{{ e.id }}">{{ e.title }}</a> ({{e.cat_name}})</li>
+                        <li class="list-group-item"><a href="/category/{{ e.cat_name }}/item/{{ e.id }}">{{ e.title }}</a>  ( {{e.cat_name}} )</li>
                     {% endfor %}
                 </ul>
             </div>
