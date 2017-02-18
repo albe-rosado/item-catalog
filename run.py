@@ -10,10 +10,9 @@ from functools import wraps
 
 
 app = Flask(__name__)
+app.config.from_object('config')
 db.init_app(app)
 
-# Loads the config
-app.config.from_object('config')
 
 
 
@@ -65,7 +64,6 @@ def requires_auth(f):
 
 
 
-
 """
     Views
 """
@@ -78,31 +76,65 @@ def index():
     else:
         user = None
     categories = Category.query.all()
-    return render_template('index.html', categories = categories, user=user)
+    last_added = Item.query.order_by('id desc').limit(10)
+    params = dict(categories = categories, user = user, last_added = last_added)
+    return render_template('index.html', **params )
 
 
 
 # Add new category
 @app.route('/newCategory', methods = ['GET', 'POST'])
 @requires_auth
-def newCategory(user):    
+def newCategory(user):
+    error = None
     form = CategoryForm()
-    if form.validate_on_submit():
-        category = Category(name = form.name.data)
-        db.session.add(category)
-        db.session.commit()
-        redirect(url_for('index'))
-    return render_template('newCategory.html', form = form, user = user)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            category = Category(name = form.name.data)
+            db.session.add(category)
+            db.session.commit()
+            redirect(url_for('index'))
+        else:
+            error = 'All fields are required'
+    params = dict(user = user, 
+                  form = form,
+                  error = error)
+    return render_template('newCategory.html', **params)
+
+
+
+# Add New Item 
+@app.route('/newItem', methods = ['GET', 'POST'])
+@requires_auth
+def newItem(user):
+    error = None
+    form = ItemForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            item = Item(title = form.title.data, 
+                        description = form.description.data, 
+                        cat_name = form.cat_name.data,
+                        created_by = user['user_id'])
+            db.session.add(item)
+            db.session.commit()
+            redirect(url_for('index'))
+        else:
+            error = 'All fields are required'
+    params = dict(user = user, form = form, error = error)
+    return render_template('newItem.html', **params)
+
+
+
+
+
+
+
 
 # Logout
 @app.route('/logout')
 def logout():
     session.pop('profile', None)
     return redirect('/')
-
-
-
-
 
 
 

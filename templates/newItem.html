@@ -1,12 +1,9 @@
 {% extends "base.html" %}
-
-
-
 {% block content %}
 <div class="row">
-    <div class="col-lg-12">
-        <h2>Add new Category</h2>
-    </div>
+    <div class="col-lg-6 ">
+        <h2>Add new Item</h2>        
+    </div>    
 </div>
 <hr>
 <div class="row">
@@ -24,8 +21,18 @@
                 <form method="POST">
                     {{form.csrf_token}}
                     <div class="form-group">
-                        {{form.name.label}}
-                        {{form.name(class="form-control")}}
+                        {{form.title.label}}
+                        {{form.title(class="form-control")}}
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        {{form.description.label}}
+                        {{form.description(class="form-control")}}
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        {{form.cat_name.label}}
+                        {{form.cat_name(class="custom-select mb-2 mr-sm-2 mb-sm-0")}}
                     </div>
                     <br>
                     <div class="form-group row">
@@ -38,4 +45,5 @@
         </div>        
     </div>
 </div>
+
 {% endblock  %}

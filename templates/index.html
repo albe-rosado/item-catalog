@@ -3,13 +3,15 @@
 <div class="row">
     <div class="col-lg-6 col-xs-12">
         <a href="/newCategory" class="btn btn-outline-primary">Add Category</a>
-        <a href="/categories" class="btn btn-outline-primary">Add Item</a>
+        <a href="/newItem" class="btn btn-outline-primary">Add Item</a>
     </div>
     <div class="col-lg-6 col-xs-12 ">
-        <form class="search form-group form-inline search ">
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Search Items">
-            <button type="button" class="btn btn-outline-primary">Search</button>
-        </form>
+        <div class="search form-group form-inline search input-group">
+            <input type="text" class="form-control" placeholder="Search items ...">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">by @lg0lia</button>
+            </span>
+        </div>
     </div>
 </div>
 
@@ -20,7 +22,7 @@
             <div class="card-block">
                 <ul class="list-group">
                     {% for category in categories %}
-                        <li class="list-group-item">{{ category.name }}</li>
+                        <li class="list-group-item"><a href="/category/{{ category.name }}">{{ category.name }}</a> </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -30,7 +32,11 @@
         <div class="card">
             <div class="card-header"> Last Added </div>
             <div class="card-block">
-
+                <ul class="list-group">
+                    {% for e in last_added %}
+                        <li class="list-group-item"><a href="/category/{{ e.cat_name }}/item/{{ e.id }}">{{ e.title }}</a> ({{e.cat_name}})</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
