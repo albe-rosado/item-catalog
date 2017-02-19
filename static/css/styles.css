@@ -1,3 +1,10 @@
+a {
+    margin-right: 0.6rem;
+    margin-left: 1.0rem;
+}
+
+
+
 .navbar {
     margin-top: 0.5rem;
 }
@@ -6,6 +13,9 @@
     margin-left: .4em !important;
 }
 
+svg {
+    fill: #0275d8 !important;
+}
 
 .search {
     margin-top: 0.5rem;

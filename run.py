@@ -3,7 +3,7 @@ import os
 import requests
 import json
 import config
-from flask import Flask, render_template, redirect, url_for,request, jsonify, session, send_from_directory
+from flask import Flask, render_template, redirect, url_for,request, jsonify, session, send_from_directory, jsonify
 from forms import CategoryForm , ItemForm
 from models import db, Category, Item
 from functools import wraps
@@ -50,16 +50,21 @@ def callback_handling():
 
 # Checks if the user is logged in
 def requires_auth(f):
-  @wraps(f)
-  def decorated(*args, **kwargs):
-    if 'profile' in session:
-        user = session['profile']
-    else:
-        user = None
-        # Takes him to the home page
-        return redirect('/')
-    return f(user = user, *args, **kwargs)
-  return decorated
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'profile' in session:
+            user = session['profile']
+        else:
+            user = None
+            # Takes him to the home page
+            return redirect('/')
+        return f(user = user, *args, **kwargs)
+    return decorated
+
+
+
+
+
 
 
 
@@ -82,6 +87,7 @@ def index():
 
 
 
+
 # Add new category
 @app.route('/newCategory', methods = ['GET', 'POST'])
 @requires_auth
@@ -100,6 +106,7 @@ def newCategory(user):
                   form = form,
                   error = error)
     return render_template('newCategory.html', **params)
+
 
 
 
@@ -125,6 +132,7 @@ def newItem(user):
 
 
 
+
 # Shows Item details
 @app.route('/category/<cat_name>/item/<item_id>')
 def showItem(cat_name, item_id):
@@ -143,6 +151,7 @@ def showItem(cat_name, item_id):
 @requires_auth
 def editItem(item_id, user):
     item = Item.query.filter_by(id = item_id).first_or_404()
+    # Checks user owns post
     if user['user_id'] != item.created_by:
         return redirect('/')
     else:
@@ -161,13 +170,45 @@ def editItem(item_id, user):
 
 
 
+# Remove item
+@app.route('/item/<item_id>/delete', methods = ['GET', 'POST'])
+@requires_auth
+def deleteItem(item_id, user):
+    item = Item.query.filter_by(id = item_id).first_or_404()
+    # Checks user owns post
+    if user['user_id'] != item.created_by:
+        return redirect('/')
+    else:
+        db.session.delete(item)
+        db.session.commit()
+        return redirect('/')
+
+
+
+
+# Shows items in a category
+@app.route('/category/<cat_name>')
+def showCategory(cat_name):
+    items = Item.query.filter_by(cat_name = cat_name).all()
+    params = dict(cat_name = cat_name, items = items)
+    return render_template('showCategory.html', **params)
+
+
+
+# return JSON
+@app.route('/catalog.json')
+def json():
+    items = Item.query.all()
+    return jsonify(ItemCatalog = [i.serialize for i in items])
+
+
+
+
 # Logout
 @app.route('/logout')
 def logout():
     session.pop('profile', None)
     return redirect('/')
-
-
 
 
 

@@ -4,9 +4,14 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-lg-12">
-        <h2>Add new Category</h2>
-    </div>
+    <div class="col-md-6">
+        <a href="javascript:history.back()" >
+            <img src="{{url_for('static', filename='img/arrow-thin-left.svg')}}" alt="arrow left">
+        </a>
+        <a href="/" >
+            <img src="{{url_for('static', filename='img/home.svg')}}" class="arrow" alt="arrow left">
+        </a>
+    </div>    
 </div>
 <hr>
 <div class="row">
@@ -20,6 +25,9 @@
             </div>
         {% endif%}
         <div class="card">
+            <div class="card-header">
+                <h4>Add new Category</h4>
+            </div>
             <div class="card-block">
                 <form method="POST">
                     {{form.csrf_token}}

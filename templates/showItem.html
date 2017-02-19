@@ -3,6 +3,17 @@
 {% block content %}
 <div class="row">
     <div class="col-md-6">
+        <a href="javascript:history.back()" >
+            <img src="{{url_for('static', filename='img/arrow-thin-left.svg')}}" alt="arrow left">
+        </a>
+        <a href="/" >
+            <img src="{{url_for('static', filename='img/home.svg')}}" class="arrow" alt="arrow left">
+        </a>
+    </div>    
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">{{item.title}}</h4>

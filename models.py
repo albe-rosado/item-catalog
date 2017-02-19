@@ -16,5 +16,14 @@ class Item(db.Model):
     title = db.Column(db.String, nullable = False)
     description = db.Column(db.Text, nullable = False)
     created_by = db.Column(db.String)
+    
+    @property
+    def serialize(self):
 
+        return {
+            'title': self.title,
+            'description': self.description,
+            'id': self.id,
+            'belong_to_category': self.cat_name
+        }
 
