@@ -3,6 +3,7 @@ import os
 import requests
 import json
 import config
+from algoliasearch import algoliasearch
 from flask import Flask, render_template, redirect, url_for,request, jsonify, session, send_from_directory, jsonify
 from forms import CategoryForm , ItemForm
 from models import db, Category, Item
@@ -14,6 +15,9 @@ app.config.from_object('config')
 db.init_app(app)
 
 
+# Add objects to algolia index
+client = algoliasearch.Client( config.ALGOLIA_CLIENT_ID, config.ALGOLIA_CLIENT_SECRET)
+algolia_index = client.init_index( config.ALGOLIA_INDEX_NAME)
 
 
 """ 
@@ -21,32 +25,33 @@ db.init_app(app)
 """
 @app.route('/callback')
 def callback_handling():
-  code = request.args.get(config.CODE_KEY)
+    import json
+    code = request.args.get(config.CODE_KEY)
 
-  json_header = {config.CONTENT_TYPE_KEY: config.APP_JSON_KEY}
+    json_header = {config.CONTENT_TYPE_KEY: config.APP_JSON_KEY}
 
-  token_url = "https://{domain}/oauth/token".format(domain=config.AUTH0_DOMAIN)
+    token_url = "https://{domain}/oauth/token".format(domain=config.AUTH0_DOMAIN)
 
-  token_payload = {
+    token_payload = {
     'client_id':     config.AUTH0_CLIENT_ID,
     'client_secret': config.AUTH0_CLIENT_SECRET,
     'redirect_uri':  config.AUTH0_CALLBACK_URL,
     'code':          code,
     'grant_type':    'authorization_code'
-  }
+    }
 
-  token_info = requests.post(token_url, data=json.dumps(token_payload), headers = json_header).json()
+    token_info = requests.post(token_url, data=json.dumps(token_payload), headers = json_header).json()
 
-  user_url = "https://{domain}/userinfo?access_token={access_token}" \
-      .format(domain=config.AUTH0_DOMAIN, access_token=token_info['access_token'])
+    user_url = "https://{domain}/userinfo?access_token={access_token}" \
+        .format(domain=config.AUTH0_DOMAIN, access_token=token_info['access_token'])
 
-  user_info = requests.get(user_url).json()
+    user_info = requests.get(user_url).json()
 
-  # Saves all user information into the session
-  session['profile'] = user_info
+    # Saves all user information into the session
+    session['profile'] = user_info
 
-  # Redirect to the User logged in page 
-  return redirect('/')
+    # Redirect to the User logged in page 
+    return redirect('/')
 
 # Checks if the user is logged in
 def requires_auth(f):
@@ -60,9 +65,6 @@ def requires_auth(f):
             return redirect('/')
         return f(user = user, *args, **kwargs)
     return decorated
-
-
-
 
 
 
@@ -124,6 +126,7 @@ def newItem(user):
                         created_by = user['user_id'])
             db.session.add(item)
             db.session.commit()
+            algolia_index.add_objects([item.serialize])
             redirect(url_for('index'))
         else:
             error = 'All fields are required'
@@ -209,6 +212,8 @@ def json():
 def logout():
     session.pop('profile', None)
     return redirect('/')
+
+
 
 
 

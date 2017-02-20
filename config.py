@@ -20,3 +20,12 @@ AUTH0_CLIENT_ID = 'sQLcidME4R6z1UdBtYB0V4ay9pwDRoML'
 AUTH0_CLIENT_SECRET = 'fcBH3ig-sBQCgggi2m4oE6jixIFk8caKWZFCNa36u2T7mKOyfNX92VfGG7fV3H5k'
 AUTH0_CALLBACK_URL = 'http://localhost:3000/callback'
 
+
+
+"""
+        Constants for Algolia Search 
+"""
+
+ALGOLIA_CLIENT_ID = 'DWCAC7LUJZ'
+ALGOLIA_CLIENT_SECRET = '1bb62fb76043db09505a5171a0e59dfb'
+ALGOLIA_INDEX_NAME = 'ItemCatalog'
