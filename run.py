@@ -118,16 +118,20 @@ def newCategory(user):
 def newItem(user):
     error = None
     form = ItemForm()
-    if request.method == 'POST':
+    if request.method == 'POST':        
         if form.validate_on_submit():
-            item = Item(title = form.title.data, 
-                        description = form.description.data, 
-                        cat_name = form.cat_name.data,
-                        created_by = user['user_id'])
-            db.session.add(item)
-            db.session.commit()
-            algolia_index.add_objects([item.serialize])
-            redirect(url_for('index'))
+            if Item.query.filter_by(title = form.title.data).first():
+                error = 'Item is already in our records'
+            else:                
+                item = Item(title = form.title.data, 
+                            description = form.description.data, 
+                            cat_name = form.cat_name.data,
+                            created_by = user['user_id'])
+                db.session.add(item)
+                db.session.commit()
+                # Adds new entry to Algolia's index
+                algolia_index.add_objects([item.serialize])
+                redirect(url_for('index'))
         else:
             error = 'All fields are required'
     params = dict(user = user, form = form, error = error)
