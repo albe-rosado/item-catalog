@@ -4,7 +4,8 @@ import requests
 import json
 import config
 from algoliasearch import algoliasearch
-from flask import Flask, render_template, redirect, url_for,request, jsonify, session, send_from_directory, jsonify
+from flask import Flask, render_template, redirect, url_for,request,\
+     jsonify, session, send_from_directory, jsonify
 from forms import CategoryForm , ItemForm
 from models import db, Category, Item
 from functools import wraps
