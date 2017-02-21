@@ -202,11 +202,11 @@ def showCategory(cat_name):
 
 
 
-# return JSON
-@app.route('/catalog.json')
-def json():
-    items = Item.query.all()
-    return jsonify(ItemCatalog = [i.serialize for i in items])
+# return item's JSON data
+@app.route('/category/<cat_name>/item/<item_id>/catalog.json')
+def itemJson(cat_name, item_id):
+    item = Item.query.filter_by(id = item_id).first_or_404()
+    return jsonify(item.serialize)
 
 
 
