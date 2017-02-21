@@ -7,9 +7,11 @@
     <title>Item Catalog</title>
     <!-- Bootstrap Styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/1b0fed92d9.js"></script>
+    <!-- Algolia InstaSearch Styles-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css">
     <!-- Custom Styles-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <script src="https://use.fontawesome.com/1b0fed92d9.js"></script>
 </head>
 <body>
     <div class="container">
@@ -38,10 +40,17 @@
     <!-- Bootstrap Scripts -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> 
+    <!--Hogan JS--> 
+    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+    <!--Algolia Search Scripts-->
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+    <script src="{{url_for('static', filename='js/search.js')}}"></script>
+    <!--Auth0 Scripts-->
     <script src="https://cdn.auth0.com/js/lock/10.9.1/lock.min.js"></script>
-    <!--Auth0 Script-->
     <script src="{{url_for('static', filename='js/auth0.js')}}"></script>
+    
 </body>
 </html>
 
