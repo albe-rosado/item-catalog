@@ -1,6 +1,6 @@
 # Item Catalog
 
-Provides a list of items within a variety of categories as well as user registration and authentication with [Auth0](https://auth0.com/). Users can create Categories, and add/edit/delete items from these categories. The app allow items search powerred by [Algolia](https://www.algolia.com/). The front end was made with [Bootstrap 4](https://v4-alpha.getbootstrap.com/).
+Provides a list of items within a variety of categories as well as user registration and authentication with [Auth0](https://auth0.com/). Users can create Categories, and add/edit/delete items from these categories. The app allow quick items search powered by [Algolia](https://www.algolia.com/). The front-end was made with [Bootstrap 4](https://v4-alpha.getbootstrap.com/).
 
 
 
